@@ -1,0 +1,50 @@
+version: "3" # 版本
+services:
+  nginx:
+    image: nginx:latest # 使用镜像
+    container_name: nginx # 容器名称
+    networks: 
+      - lnmp # 使用网络 相当于 docker run里的 --network  
+    ports:
+      - "8888:80" # 端口映射 相当于 docker run里的 -p  
+    expose:
+      - "80" # 暴露端口
+    volumes:
+      - /home/nginx/html:/usr/share/nginx/html # nginx web 根目录
+      - /home/nginx/conf/:/etc/nginx/conf.d # 配置目录
+      - /home/nginx/log:/var/log/nginx # 日志目录
+    depends_on: # 依赖 
+      - php
+    links: 
+      - php # 对应 server 中的php
+  php:
+    build: # 由于 PHP 的构建相对较为复杂，所以用了 Dockerfile 的方式
+      context: ./php7.4 # Dockerfile 所在文件夹
+      dockerfile: Dockerfile # Dockerfile名称
+    # image: home-php:latest 这个是dockerfile building后的镜像可能的名称
+    container_name: php7.4
+    volumes:
+      - /home/nginx/html:/usr/share/nginx/html # nginx web 根目录
+      - /home/php7.4/conf:/usr/local/etc/php/conf.d # 配置目录
+    networks:
+      - lnmp
+    depends_on: # 依赖 
+      - mysql
+    expose:
+      - "9000"
+  mysql:
+    image: mysql:5.7
+    container_name: mysql5.7
+    volumes:
+      - /home/mysql5.7/conf/:/etc/mysql/conf.d # 配置目录
+      - /home/mysql5.7/data:/var/lib/mysql # 数据目录
+    environment:
+      MYSQL_ROOT_PASSWORD: root # mysql 密码 用户名是默认的root
+    networks:
+      - lnmp
+    expose:
+      - "3306"
+    ports:
+      - "33306:3306"
+networks:
+  lnmp:

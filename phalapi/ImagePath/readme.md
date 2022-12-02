@@ -14,7 +14,7 @@ require_once '../Library/ImagePath/Lib.php';
      'uploads'=>'uploads',//第一个为默认空间路径
      'images'=>'static/images',
  ];
- $f = new ImagePath($spacePath);
+ $f = new ImagePath_Lib($spacePath);
 $imagePath->show();
 ```
 //文件路径由 $spacePath + $_GET['f'] 组成
