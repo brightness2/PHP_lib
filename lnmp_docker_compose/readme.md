@@ -14,3 +14,8 @@ $ cd lnmp
 $ docker compose up -d
 
 ```
+## 记得修改配置文件
+
+nginx/conf/nginx.conf
+
+php7.4/conf/php.ini
