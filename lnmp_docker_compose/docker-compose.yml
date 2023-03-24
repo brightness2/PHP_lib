@@ -32,6 +32,7 @@ services:
       - mysql
     expose:
       - "9000"
+    user: 1000:1000 # 代码运行时用户id，解决php-fpm写入权限问题,注意宿主机要 adduser <username>， 创建用户，查看用户id ，cat /etc/passwd，挂载的文件要设置为创建的用户
   mysql:
     image: mysql:5.7
     container_name: mysql5.7

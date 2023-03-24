@@ -3,7 +3,9 @@ FROM php:7.4-fpm
 # composer
 RUN curl -sS https://getcomposer.org/installer | php \
     && mv composer.phar /usr/bin/composer && chmod +x /usr/bin/composer
-
+    && apt-get install -y git \
+    zip \
+    unzip
 #各种依赖库和扩展
 RUN apt-get update \
     && apt-get install -y \
