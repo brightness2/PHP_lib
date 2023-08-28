@@ -32,7 +32,7 @@ class JWT{
         }
         $base_header = base64_encode(json_encode($this->header));
         $payload['iat'] = time();
-        $payload['exp'] = $payload['iat'] + $this->expire;
+        $payload['exp'] = $this->expire==0?0:($payload['iat'] + $this->expire);
         $base_payload = base64_encode(json_encode($payload));
         $sign = $this->signature($base_header.$base_payload,$this->secret);
         return $base_header.'.'.$base_payload.'.'.$sign;
@@ -85,7 +85,7 @@ class JWT{
             $this->_setError('token载荷错误');
             return false;
         }
-        if($this->expire!=0&&$payload['exp']<time()){
+        if($payload['exp']!=0&&$payload['exp']<time()){
             $this->_setError('签名过期');
             return false;
         }

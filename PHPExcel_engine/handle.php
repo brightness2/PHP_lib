@@ -10,7 +10,7 @@ class PHPExcelHandle
 {
 
     public $objPHPExcel = ''; #PHPExcel对象
-
+    
     protected $activeSheet = ''; #sheet对象
 
     public function __construct($objPHPExcel)
