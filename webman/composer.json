@@ -1,0 +1,5 @@
+{
+    "require": {
+        "workerman/redis-queue": "^1.1"
+    }
+}
